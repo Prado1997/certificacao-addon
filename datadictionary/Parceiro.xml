@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<metadados xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:noNamespaceSchemaLocation="../gradle/metadados.xsd">
+
+    <nativeTable name="TGFPAR">
+        <instances>
+            <instance name="DRQ_Parceiro">
+                <description>Instância de Parceiro</description>
+            </instance>
+        </instances>
+        <fields>
+            <field name="CODPARC" dataType="INTEIRO" allowSearch="S" visibleOnSearch="S">
+                <description>Código do Parceiro</description>
+            </field>
+            <field name="NOMEPARC" dataType="TEXTO" allowSearch="S" visibleOnSearch="S">
+                <description>Nome do Parceiro</description>
+            </field>
+        </fields>
+    </nativeTable>
+</metadados>

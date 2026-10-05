@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<metadados xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:noNamespaceSchemaLocation="../gradle/metadados.xsd">
+
+    <nativeTable name="TSIUSU">
+        <instances>
+            <instance name="DRQ_UsuarioInclusao">
+                <description>Instância de Usuário Inclusão</description>
+            </instance>
+            <instance name="DRQ_UsuarioAlteracao">
+                <description>Instância de Usuário Alteração</description>
+            </instance>
+        </instances>
+        <fields>
+            <field name="CODUSU" dataType="INTEIRO" allowSearch="S" visibleOnSearch="S">
+                <description>Código do Usuário</description>
+            </field>
+            <field name="NOMEUSU" dataType="TEXTO" allowSearch="S" visibleOnSearch="S">
+                <description>Nome do Usuário</description>
+            </field>
+        </fields>
+    </nativeTable>
+</metadados>

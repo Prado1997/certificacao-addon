@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<metadados xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:noNamespaceSchemaLocation="../.gradle/metadados.xsd">
+
+    <table name="TRQ_STATUS_REQUISICAO" sequenceType="A" sequenceField="ID_REQ">
+        <description>Cadastro de Status de Requisições</description>
+        <primaryKey>
+            <field name="ID_REQ"/>
+        </primaryKey>
+        <instances>
+            <instance name="DRQ_StatusRequisicao">
+                <description>Instância de Status Requisição</description>
+                <relationShip>
+                    <relation entityName="DRQ_UsuarioAlteracao">
+                        <fields>
+                            <field localName="USUARIO_ATUALIZACAO" targetName="CODUSU"/>
+                        </fields>
+                    </relation>
+                </relationShip>
+            </instance>
+        </instances>
+        <fields>
+            <field name="ID_REQ" dataType="INTEIRO" allowSearch="S" visibleOnSearch="S">
+                <description>ID da Requisição</description>
+            </field>
+            <field name="STATUS" dataType="LISTA" allowSearch="S" visibleOnSearch="S">
+                <description>Status</description>
+                <expression>
+                    <![CDATA[ if($col_STATUS == null) { return "P"; } else { return $col_STATUS; };]]></expression>
+
+                <fieldOptions>
+                    <option value="P">Pendente</option>
+                    <option value="R">Realizando</option>
+                    <option value="F">Finalizada</option>
+                </fieldOptions>
+            </field>
+            <field name="USUARIO_ATUALIZACAO" dataType="INTEIRO" allowSearch="N" visibleOnSearch="N" visible="N">
+                <description>Usuário de Atualização</description>
+                <expression><![CDATA[return $ctx_usuario_logado]]></expression>
+            </field>
+        </fields>
+    </table>
+
+
+</metadados>

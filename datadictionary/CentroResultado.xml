@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<metadados xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:noNamespaceSchemaLocation="../gradle/metadados.xsd">
+
+    <nativeTable name="TSICUS">
+        <instances>
+            <instance name="DRQ_CentroResultado">
+                <description>Instância de Centro Resultado</description>
+            </instance>
+        </instances>
+        <fields>
+            <field name="CODCENCUS" dataType="INTEIRO" allowSearch="S" visibleOnSearch="S">
+                <description>Código Centro Resultado</description>
+            </field>
+            <field name="DESCRCENCUS" dataType="TEXTO" allowSearch="S" visibleOnSearch="S">
+                <description>Descrição Centro Resultado</description>
+            </field>
+        </fields>
+    </nativeTable>
+</metadados>

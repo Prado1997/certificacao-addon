@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<metadados xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:noNamespaceSchemaLocation="../.gradle/metadados.xsd">
+    <table name="TRQ_REQUISICAO" sequenceType="A" sequenceField="ID_REQ">
+        <description>Cadastro de Requisições</description>
+        <primaryKey>
+            <field name="ID_REQ"/>
+        </primaryKey>
+        <instances>
+            <instance name="DRQ_Requisicao">
+                <description>Requisições</description>
+                <relationShip>
+                    <relation entityName="DRQ_UsuarioInclusao" relation="OneToOne">
+                        <fields>
+                            <field localName="USUARIO_CRIACAO" targetName="CODUSU"/>
+                        </fields>
+                    </relation>
+                    <relation entityName="DRQ_StatusRequisicao" insert="S" update="S" removeCascade="S">
+                        <expression>@ref-param[merge-on-root=true]</expression>
+                        <fields>
+                            <field localName="ID_REQ" targetName="ID_REQ"/>
+                        </fields>
+                    </relation>
+                    <relation entityName="DRQ_Local">
+                        <fields>
+                            <field localName="LOCAL" targetName="ID_LOCAL"/>
+                        </fields>
+                    </relation>
+                    <relation entityName="DRQ_Parceiro">
+                        <fields>
+                            <field localName="PARCEIRO" targetName="CODPARC"/>
+                        </fields>
+                    </relation>
+                    <relation entityName="DRQ_CentroResultado">
+                        <fields>
+                            <field localName="CENTRORESULTADO" targetName="CODCENCUS"/>
+                        </fields>
+                    </relation>
+                    <relation entityName="DRQ_Insumo" relation="OneToMany">
+                        <fields>
+                            <field localName="ID_REQ" targetName="ID_REQ"/>
+                        </fields>
+                    </relation>
+                </relationShip>
+            </instance>
+        </instances>
+        <filters>
+            <filter field="REALIZADA"></filter>
+            <filter field="DT_ABERTURA" type="PERIODO"></filter>
+            <filter field="PARCEIRO" considerRelationFilter="true"></filter>
+            <filter field="USUARIO_CRIACAO" considerRelationFilter="true"></filter>
+        </filters>
+        <fields>
+            <field name="ID_REQ" dataType="INTEIRO" allowSearch="S" visibleOnSearch="S">
+                <description>ID da Requisição</description>
+            </field>
+            <field name="REALIZADA" dataType="LISTA" allowSearch="S" visibleOnSearch="S">
+                <description>Realizada (S/N)</description>
+                <expression>
+                    <![CDATA[ if($col_REALIZADA == null) { return "N"; } else { return $col_REALIZADA; };]]></expression>
+
+                <fieldOptions>
+                    <option value="S">Sim</option>
+                    <option value="N">Não</option>
+                </fieldOptions>
+            </field>
+            <field name="USUARIO_CRIACAO" dataType="INTEIRO" allowSearch="S" visibleOnSearch="S" readOnly="S">
+                <description>Usuário de Criação</description>
+                <expression><![CDATA[return $ctx_usuario_logado]]></expression>
+            </field>
+            <field name="DT_ABERTURA" dataType="DATA" allowSearch="S" visibleOnSearch="S" readOnly="S">
+                <description>Data Abertura</description>
+                <expression><![CDATA[return $ctx_dh_atual;]]></expression>
+            </field>
+            <field name="DT_ENCERRAMENTO" dataType="DATA" allowSearch="S" visibleOnSearch="S" readOnly="S">
+                <description>Data Encerramento</description>
+            </field>
+            <field name="CENTRORESULTADO" dataType="INTEIRO" allowSearch="S" visibleOnSearch="S">
+                <description>Centro de Resultado</description>
+            </field>
+            <field name="LOCAL" dataType="INTEIRO" allowSearch="S" visibleOnSearch="S">
+                <description>Local</description>
+            </field>
+            <field name="PARCEIRO" dataType="INTEIRO" allowSearch="S" visibleOnSearch="S">
+                <description>Parceiro</description>
+            </field>
+            <field name="EMAIL_PARCEIRO" dataType="TEXTO" allowSearch="S" visibleOnSearch="S" readOnly="S">
+                <description>E-mail Parceiro</description>
+            </field>
+            <field name="DETALHES" dataType="HTML" allowSearch="S" visibleOnSearch="S" required="S">
+                <description>Detalhes da Requisição</description>
+            </field>
+            <field name="COD_REQUISICAO_PORTAL" dataType="INTEIRO" allowSearch="S" visibleOnSearch="S">
+                <description>Pedido de Requisição (Portal)</description>
+            </field>
+            <field name="DIASDURACAO" dataType="INTEIRO" allowSearch="N" visibleOnSearch="S" readOnly="S"
+                   calculated="S">
+                <description>Duração (dias)</description>
+                <expression>
+                    <![CDATA[#type.sql# SELECT FN_TRQ_DIAS_ABERTO(TRQ_REQUISICAO.DT_ABERTURA, TRQ_REQUISICAO.DT_ENCERRAMENTO) FROM DUAL]]></expression>
+            </field>
+        </fields>
+    </table>
+
+</metadados>

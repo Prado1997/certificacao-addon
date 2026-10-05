@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<scripts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../.gradle/scripts.xsd">
+
+    <!--
+        Para mais informações sobre a criação e utilização dos Scripts de Banco,
+        consulte a documentação oficial da Sankhya em: https://developer.sankhya.com.br/docs/02_scripts
+    -->
+
+    <sql nomeTabela="TRQ_REQUISICAO" ordem="1" executar="SE_NAO_EXISTIR" tipoObjeto="FUNCTION" nomeObjeto="FN_TRQ_DIAS_ABERTO">
+        <oracle>
+            CREATE OR REPLACE FUNCTION FN_TRQ_DIAS_ABERTO (p_dt_abertura IN DATE, p_dt_encerramento IN DATE)
+            RETURN NUMBER
+            IS
+            BEGIN
+            IF p_dt_abertura IS NULL THEN
+            RETURN NULL;
+            END IF;
+            RETURN TRUNC(NVL(p_dt_encerramento, SYSDATE)) - TRUNC(p_dt_abertura);
+            END;
+        </oracle>
+
+        <mssql>
+            CREATE FUNCTION FN_TRQ_DIAS_ABERTO (@dt_abertura DATETIME, @dt_encerramento DATETIME)
+            RETURNS INT
+            AS
+            BEGIN
+            IF @dt_abertura IS NULL
+            RETURN NULL;
+            RETURN DATEDIFF(DAY, @dt_abertura, ISNULL(@dt_encerramento, GETDATE()));
+            END;
+        </mssql>
+    </sql>
+
+</scripts>

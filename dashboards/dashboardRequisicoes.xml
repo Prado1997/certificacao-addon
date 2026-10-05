@@ -1,0 +1,23 @@
+<dashboard titulo="REQUISICOESINTERNASDASHBOARD" descricao="" grupo=""><layout>
+  <container orientacao="V" tamanhoRelativo="100">
+    <gadget id="130" />
+  </container>
+</layout><gadgetSS nugdg="130" titulo="REQUISICOESINTERNASDASHBOARD" descricao="" categoria="" urlcomponente=""><gadget><prompt-parameters><parameter id="P_PERIODO" description="Período" metadata="datePeriod" required="true" keep-last="false" keep-date="true" show-inactives="false" label="P_PERIODO : Período" order="0" /></prompt-parameters><level id="01T" description="Principal"><container orientacao="V" tamanhoRelativo="100"><container orientacao="V" tamanhoRelativo="50"><simple-value id="svl_01X"><expression type="sql" data-source="MGEDS"><![CDATA[SELECT COUNT(*) AS TOTAL_GERAL,
+COUNT(CASE WHEN RQ.REALIZADA = 'S' THEN 1 END) AS TOTAL_REALIZADA,
+COUNT(CASE WHEN ST.STATUS = 'P' THEN 1 END) AS TOTAL_PENDENTE,
+COUNT(CASE WHEN ST.STATUS = 'R' THEN 1 END) AS TOTAL_REALIZANDO,
+COUNT(CASE WHEN ST.STATUS = 'F' THEN 1 END) AS TOTAL_FINALIZADA
+FROM TRQ_REQUISICAO RQ
+LEFT JOIN TRQ_STATUS_REQUISICAO ST ON ST.ID_REQ = RQ.ID_REQ
+WHERE TRUNC(RQ.DT_ABERTURA) BETWEEN :P_PERIODO.INI AND :P_PERIODO.FIN]]></expression><metadata><field name="TOTAL_GERAL" label="TOTAL_GERAL" type="I" visible="true" useFooter="false" /><field name="TOTAL_REALIZADA" label="TOTAL_REALIZADA" type="I" visible="true" useFooter="false" /><field name="TOTAL_PENDENTE" label="TOTAL_PENDENTE" type="I" visible="true" useFooter="false" /><field name="TOTAL_REALIZANDO" label="TOTAL_REALIZANDO" type="I" visible="true" useFooter="false" /><field name="TOTAL_FINALIZADA" label="TOTAL_FINALIZADA" type="I" visible="true" useFooter="false" /></metadata><value-expression><![CDATA[<div style='text-align: center;'>Total Requisições: $TOTAL_GERAL<br/>Realizadas: $TOTAL_REALIZADA<br/>Pendentes: $TOTAL_PENDENTE<br/>Realizando: $TOTAL_REALIZANDO<br/>Finalizadas: $TOTAL_FINALIZADA</div>]]></value-expression></simple-value></container><container orientacao="V" tamanhoRelativo="50"><chart id="cht_01Y" type="column"><expression type="sql" data-source="MGEDS"><![CDATA[SELECT COUNT(*) AS TOTAL_GERAL,
+COUNT(CASE WHEN ST.STATUS = 'P' THEN 1 END) AS TOTAL_PENDENTE,
+COUNT(CASE WHEN ST.STATUS = 'R' THEN 1 END) AS TOTAL_REALIZANDO,
+COUNT(CASE WHEN ST.STATUS = 'F' THEN 1 END) AS TOTAL_FINALIZADA,
+P.CODPARC,
+P.NOMEPARC
+FROM TRQ_REQUISICAO RQ
+JOIN TGFPAR P ON RQ.PARCEIRO = P.CODPARC
+LEFT JOIN TRQ_STATUS_REQUISICAO ST ON ST.ID_REQ = RQ.ID_REQ
+WHERE TRUNC(RQ.DT_ABERTURA) BETWEEN :P_PERIODO.INI AND :P_PERIODO.FIN
+GROUP BY P.CODPARC, P.NOMEPARC
+ORDER BY 1 DESC]]></expression><metadata><field name="TOTAL_GERAL" label="TOTAL_GERAL" type="I" visible="true" useFooter="false" /><field name="TOTAL_PENDENTE" label="TOTAL_PENDENTE" type="I" visible="true" useFooter="false" /><field name="TOTAL_REALIZANDO" label="TOTAL_REALIZANDO" type="I" visible="true" useFooter="false" /><field name="TOTAL_FINALIZADA" label="TOTAL_FINALIZADA" type="I" visible="true" useFooter="false" /><field name="CODPARC" label="CODPARC" type="I" visible="true" useFooter="false" /><field name="NOMEPARC" label="NOMEPARC" type="S" visible="true" useFooter="false" /></metadata><series><serie type="column"><xField>$NOMEPARC</xField><yField>$TOTAL_GERAL</yField><display><![CDATA[Total]]></display><color>0x1E90FF</color></serie><serie type="column"><xField>$NOMEPARC</xField><yField>$TOTAL_PENDENTE</yField><display><![CDATA[Pendentes]]></display><color>0xFF0000</color></serie><serie type="column"><xField>$NOMEPARC</xField><yField>$TOTAL_REALIZANDO</yField><display><![CDATA[Realizando]]></display><color>0xFFA500</color></serie><serie type="column"><xField>$NOMEPARC</xField><yField>$TOTAL_FINALIZADA</yField><display><![CDATA[Finalizadas]]></display><color>0x00FF00</color></serie></series></chart></container></container></level></gadget></gadgetSS></dashboard>

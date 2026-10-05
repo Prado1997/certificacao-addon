@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<metadados xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:noNamespaceSchemaLocation="../.gradle/metadados.xsd">
+
+    <treeTable name="TRQ_LOCAL" defaultMask="#.#.#.#" maskName="DESCRICAO">
+        <description>Cadastro de Locais</description>
+        <primaryKey>
+            <field name="ID_LOCAL"/>
+        </primaryKey>
+        <instances>
+            <instance name="DRQ_Local">
+                <description>Local</description>
+            </instance>
+        </instances>
+        <fields>
+            <field name="ID_LOCAL" dataType="INTEIRO" allowSearch="S" visibleOnSearch="S">
+                <description>ID Local</description>
+            </field>
+            <field name="DESCRICAO" dataType="TEXTO" allowSearch="S" visibleOnSearch="S" isPresentation="S">
+                <description>Descrição Local</description>
+            </field>
+        </fields>
+    </treeTable>
+
+
+</metadados>

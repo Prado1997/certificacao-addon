@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<metadados xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:noNamespaceSchemaLocation="../.gradle/metadados.xsd">
+
+    <menu id="requisicoes" description="Requisições Internas" icon="/$ctx/assets/icon.png">
+
+        <folder id="relatorios" description="Dashboards">
+            <dashboard id="dashboardRequisicoes" file="dashboardRequisicoes.xml"
+                       description="Dashboard Requisições Internas"></dashboard>
+        </folder>
+
+        <dynamicTreeView id="DRQ_Local" instance="DRQ_Local" description="Locais"></dynamicTreeView>
+
+        <dynamicForm id="DRQ_Requisicao" instance="DRQ_Requisicao" description="Requisições Internas"></dynamicForm>
+        <dynamicForm id="DRQ_Log" instance="DRQ_Log" description="Log de Requisições"></dynamicForm>
+    </menu>
+</metadados>

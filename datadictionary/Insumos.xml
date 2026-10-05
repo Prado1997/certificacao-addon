@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<metadados xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:noNamespaceSchemaLocation="../gradle/metadados.xsd">
+
+    <table name="TRQ_INSUMO" sequenceType="A" sequenceField="ID_INSUMO">
+        <description>Cadastro de Insumos para Requisição</description>
+        <primaryKey>
+            <field name="ID_INSUMO"/>
+        </primaryKey>
+        <instances>
+            <instance name="DRQ_Insumo">
+                <description>Insumos</description>
+                <relationShip>
+                    <relation entityName="DRQ_Requisicao">
+                        <fields>
+                            <field localName="ID_INSUMO" targetName="ID_REQ"/>
+                        </fields>
+                    </relation>
+                </relationShip>
+            </instance>
+        </instances>
+        <fields>
+            <field name="ID_INSUMO" dataType="INTEIRO" allowSearch="S" visibleOnSearch="S">
+                <description>ID do Insumo</description>
+            </field>
+            <field name="ID_REQ" dataType="INTEIRO" allowSearch="S" visibleOnSearch="S">
+                <description>Requisição</description>
+            </field>
+            <field name="DESCRICAO" dataType="TEXTO" allowSearch="S" visibleOnSearch="S">
+                <description>Descrição</description>
+            </field>
+            <field name="QTD" dataType="DECIMAL" allowSearch="S" visibleOnSearch="S">
+                <description>Quantidade</description>
+            </field>
+        </fields>
+    </table>
+</metadados>
