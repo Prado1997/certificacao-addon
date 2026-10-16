@@ -66,11 +66,21 @@
             </field>
             <field name="USUARIO_CRIACAO" dataType="INTEIRO" allowSearch="S" visibleOnSearch="S" readOnly="S">
                 <description>Usuário de Criação</description>
-                <expression><![CDATA[return $ctx_usuario_logado]]></expression>
+                <expression><![CDATA[
+                    if ($col_USUARIO_CRIACAO != null) {
+                        return $col_USUARIO_CRIACAO;
+                    }
+                    return $ctx_usuario_logado;
+                ]]></expression>
             </field>
             <field name="DT_ABERTURA" dataType="DATA" allowSearch="S" visibleOnSearch="S" readOnly="S">
                 <description>Data Abertura</description>
-                <expression><![CDATA[return $ctx_dh_atual;]]></expression>
+                <expression><![CDATA[
+                    if ($col_DT_ABERTURA != null) {
+                        return $col_DT_ABERTURA;
+                    }
+                    return $ctx_dh_atual;
+                ]]></expression>
             </field>
             <field name="DT_ENCERRAMENTO" dataType="DATA" allowSearch="S" visibleOnSearch="S" readOnly="S">
                 <description>Data Encerramento</description>

@@ -39,11 +39,26 @@ public class RequisicaoListener extends PersistenceEventAdapter {
     }
 
     @Override
+    public void beforeInsert(PersistenceEvent event) throws PersistenciaException {
+        try {
+            DynamicVO reqVO = (DynamicVO) event.getVo();
+            BigDecimal codparc = reqVO.asBigDecimal("PARCEIRO");
+            if (codparc == null) {
+                return;
+            }
+
+            String email = requisicaoRepository.buscarEmailParceiro(codparc.longValue());
+            reqVO.setProperty("EMAIL_PARCEIRO", email);
+        } catch (Exception e) {
+            throw new PersistenciaException(e);
+        }
+    }
+
+    @Override
     public void afterInsert(PersistenceEvent event) throws PersistenciaException {
         try {
             DynamicVO reqVO = (DynamicVO) event.getVo();
             Long idRequisicao = reqVO.asLong("ID_REQ");
-
             statusRequisicaoRepository.inserir(idRequisicao, StatusRequisicaoEnum.PENDENTE.getValor());
         } catch (Exception e) {
             throw new PersistenciaException(e);
