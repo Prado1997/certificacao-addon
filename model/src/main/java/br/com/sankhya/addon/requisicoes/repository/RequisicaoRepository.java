@@ -13,6 +13,7 @@ import br.com.sankhya.jape.wrapper.JapeWrapper;
 import br.com.sankhya.modelcore.util.DynamicEntityNames;
 import br.com.sankhya.modelcore.util.EntityFacadeFactory;
 import com.sankhya.util.JdbcUtils;
+import com.sankhya.util.StringUtils;
 import com.sankhya.util.TimeUtils;
 import helper.JapeHelper;
 
@@ -89,24 +90,7 @@ public class RequisicaoRepository {
 
     //
 
-    //    private Collection<DynamicVO> getAtrasadas(JapeWrapper jw) throws Exception {
-//        return jw.find(" DT_CHEGADA_PREVISTA < ?", Timestamp.valueOf(LocalDateTime.now()));
-//    }
-//
-//    public void atualizarAtrasadas() throws Exception {
-//        JapeHelper.executeWithTX(() -> {
-//            JapeWrapper jw = getWrapper(DGE_VIAGEM);
-//            for (DynamicVO dynamicVO : getAtrasadas(jw)) {
-//                if (!dynamicVO.asString("ATRASADA").equals("S")) {
-//                    jw.prepareToUpdate(dynamicVO)
-//                        .set("ATRASADA", "S")
-//                        .update();
-//                }
-//            }
-//
-//        });
-//    }
-//
+    //    p
     public String buscarEmailParceiro(Long idParceiro) throws Exception {
         try {
             JapeWrapper jw = getWrapper(DynamicEntityNames.PARCEIRO);
@@ -130,25 +114,46 @@ public class RequisicaoRepository {
         return jw.find("PARCEIRO = ?", BigDecimal.valueOf(idParceiro));
     }
 
-    //
-//    public DynamicVO inserir(Long idParceiro, Long idPedido, LocalDateTime dataSaida, LocalDateTime dataChegadaPrevista) throws Exception {
-//        DynamicVO viagemVO = null;
-//        try {
-//            JapeWrapper jw = getWrapper(DGE_VIAGEM);
-//            viagemVO = jw.create()
-//                .set("PARCEIRO", BigDecimal.valueOf(idParceiro))
-//                .set("COD_PEDIDO_COMPRA", BigDecimal.valueOf(idPedido))
-//                .set("DT_SAIDA", Timestamp.valueOf(dataSaida))
-//                .set("DT_CHEGADA_PREVISTA", Timestamp.valueOf(dataChegadaPrevista))
-//                .save();
-//        } catch (Exception e) {
-//            throw new PersistenciaException(e);
-//        }
-//
-//        return viagemVO;
-//
-//    }
-//
+
+    public DynamicVO inserir(Long idParceiro, Long idPedido, Long idCentroResultado) throws Exception {
+        DynamicVO requisicaoVO = null;
+        try {
+            JapeWrapper jw = getWrapper(DRQ_REQUISICAO);
+            requisicaoVO = jw.create()
+                .set("PARCEIRO", BigDecimal.valueOf(idParceiro))
+                .set("COD_REQUISICAO_PORTAL", BigDecimal.valueOf(idPedido))
+                .set("CENTRORESULTADO", BigDecimal.valueOf(idCentroResultado))
+                .save();
+        } catch (Exception e) {
+            throw new PersistenciaException(e);
+        }
+
+        return requisicaoVO;
+    }
+
+    public String buscarParceiroBloqueado(Long idParceiro) throws Exception {
+        try {
+            JapeWrapper jw = getWrapper(DynamicEntityNames.PARCEIRO);
+            DynamicVO parcVO = jw.findByPK(BigDecimal.valueOf(idParceiro));
+            return StringUtils.getValueOrDefault(parcVO.asString("BLOQUEAR"), "N");
+        } catch (Exception e) {
+            throw new PersistenciaException(e);
+        }
+    }
+
+    public Collection<DynamicVO> listarRequisicoesParceiro(Long idParceiro) throws Exception {
+        try {
+            JapeWrapper jw = getWrapper(DRQ_REQUISICAO);
+            return getViagensParceiro(idParceiro, jw);
+        } catch (Exception e) {
+            throw new PersistenciaException(e);
+        }
+    }
+
+    public Collection<DynamicVO> getViagensParceiro(Long idParceiro, JapeWrapper jw) throws Exception {
+        return jw.find("PARCEIRO = ?", BigDecimal.valueOf(idParceiro));
+    }
+
     private JapeWrapper getWrapper(String nomeEntidade) {
         return JapeFactory.dao(nomeEntidade);
     }

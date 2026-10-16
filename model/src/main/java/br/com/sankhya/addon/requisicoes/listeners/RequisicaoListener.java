@@ -8,6 +8,7 @@ import br.com.sankhya.jape.event.PersistenceEvent;
 import br.com.sankhya.jape.event.PersistenceEventAdapter;
 import br.com.sankhya.jape.vo.DynamicVO;
 import br.com.sankhya.studio.annotations.Listener;
+import com.sankhya.util.StringUtils;
 
 import java.math.BigDecimal;
 
@@ -25,8 +26,9 @@ public class RequisicaoListener extends PersistenceEventAdapter {
     @Override
     public void beforeUpdate(PersistenceEvent event) throws PersistenciaException {
         try {
-            if (event.getModifingFields().isModifing("PARCEIRO")) {
-                DynamicVO reqVO = (DynamicVO) event.getVo();
+            DynamicVO reqVO = (DynamicVO) event.getVo();
+            String emailRequisicao = StringUtils.getNullAsEmpty(reqVO.asString("EMAIL_PARCEIRO"));
+            if (emailRequisicao.isEmpty() || event.getModifingFields().isModifing("PARCEIRO")) {
                 BigDecimal codparc = reqVO.asBigDecimal("PARCEIRO");
                 String email = requisicaoRepository.buscarEmailParceiro(codparc.longValue());
                 reqVO.setProperty("EMAIL_PARCEIRO", email);

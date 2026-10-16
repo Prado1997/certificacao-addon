@@ -1,8 +1,11 @@
 package br.com.sankhya.addon.requisicoes.component;
 
+import br.com.sankhya.addon.requisicoes.dto.RequisicaoDTO;
 import br.com.sankhya.addon.requisicoes.exception.PersistenciaException;
 import br.com.sankhya.addon.requisicoes.repository.RequisicaoRepository;
 import br.com.sankhya.addon.requisicoes.repository.StatusRequisicaoRepository;
+import br.com.sankhya.addon.requisicoes.util.RequisicaoConverter;
+import br.com.sankhya.addon.requisicoes.util.StatusRequisicaoEnum;
 import br.com.sankhya.extensions.actionbutton.Registro;
 import br.com.sankhya.jape.vo.DynamicVO;
 
@@ -47,24 +50,16 @@ public class RequisicaoComponent {
             throw new PersistenciaException(e.getMessage(), e.getCause());
         }
     }
-//
-//    public void criarViagem(Long idParceiro, Long idPedido) throws Exception {
-//        LocalDateTime dataSaida = LocalDateTime.now().plusDays(2);
-//        LocalDateTime dataChegadaPrevista = LocalDateTime.now().plusDays(15);
-//
-//        DynamicVO viagemVO = this.viagemRepository.inserir(idParceiro, idPedido, dataSaida, dataChegadaPrevista);
-//        if (viagemVO != null) {
-//            BigDecimal idViagem = viagemVO.asBigDecimal("ID_VIAGEM");
-//            String status = StatusViagemEnum.PENDENTE.getValor();
-//            this.statusViagemRepository.inserir(idViagem.longValue(), status);
-//        }
-//    }
-//
-//    public Collection<ViagemDTO> listarViagensParceiro(Long idParceiro) throws Exception {
-//        Collection<DynamicVO> listarViagensParceiro = this.viagemRepository.listarViagensParceiro(idParceiro);
-//        return listarViagensParceiro.stream()
-//            .map(ViagemConverter::toDTO)
-//            .collect(Collectors.toList());
-//    }
+
+    public void criarRequisicao(Long idParceiro, Long idPedido, Long idCentroResultado) throws Exception {
+        this.requisicaoRepository.inserir(idParceiro, idPedido, idCentroResultado);
+    }
+
+    public Collection<RequisicaoDTO> listarRequisicoesParceiro(Long idParceiro) throws Exception {
+        Collection<DynamicVO> listarRequisicoesParceiro = this.requisicaoRepository.listarRequisicoesParceiro(idParceiro);
+        return listarRequisicoesParceiro.stream()
+            .map(RequisicaoConverter::toDTO)
+            .collect(Collectors.toList());
+    }
 
 }
