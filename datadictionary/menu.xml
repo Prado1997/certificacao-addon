@@ -12,6 +12,5 @@
         <dynamicTreeView id="DRQ_Local" instance="DRQ_Local" description="Locais"></dynamicTreeView>
 
         <dynamicForm id="DRQ_Requisicao" instance="DRQ_Requisicao" description="Requisições Internas"></dynamicForm>
-        <dynamicForm id="DRQ_Log" instance="DRQ_Log" description="Log de Requisições"></dynamicForm>
     </menu>
 </metadados>

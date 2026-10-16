@@ -5,7 +5,6 @@ import br.com.sankhya.addon.requisicoes.util.StatusRequisicaoEnum;
 import br.com.sankhya.extensions.actionbutton.Registro;
 import br.com.sankhya.jape.wrapper.JapeFactory;
 import br.com.sankhya.jape.wrapper.JapeWrapper;
-import helper.JapeHelper;
 
 import java.math.BigDecimal;
 
@@ -42,7 +41,6 @@ public class StatusRequisicaoRepository {
         } catch (Exception e) {
             throw new PersistenciaException(e);
         }
-
     }
 
     private JapeWrapper getWrapper(String nomeEntidade) {

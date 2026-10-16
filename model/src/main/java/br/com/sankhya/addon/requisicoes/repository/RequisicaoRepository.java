@@ -65,7 +65,6 @@ public class RequisicaoRepository {
             jdbc = EntityFacadeFactory.getDWFFacade().getJdbcWrapper();
             jdbc.openSession();
             sql = new NativeSql(jdbc);
-            // LEFT JOIN + COALESCE: requisição sem linha de status conta como Pendente
             sql.appendSql("SELECT COALESCE(ST.STATUS, 'P') AS STATUS, COUNT(1) AS QTD "
                 + "FROM TRQ_REQUISICAO RQ "
                 + "LEFT JOIN TRQ_STATUS_REQUISICAO ST ON ST.ID_REQ = RQ.ID_REQ "
@@ -88,9 +87,6 @@ public class RequisicaoRepository {
         }
     }
 
-    //
-
-    //    p
     public String buscarEmailParceiro(Long idParceiro) throws Exception {
         try {
             JapeWrapper jw = getWrapper(DynamicEntityNames.PARCEIRO);
@@ -114,7 +110,6 @@ public class RequisicaoRepository {
         return jw.find("PARCEIRO = ?", BigDecimal.valueOf(idParceiro));
     }
 
-
     public DynamicVO inserir(Long idParceiro, Long idPedido, Long idCentroResultado) throws Exception {
         DynamicVO requisicaoVO = null;
         try {
@@ -127,7 +122,6 @@ public class RequisicaoRepository {
         } catch (Exception e) {
             throw new PersistenciaException(e);
         }
-
         return requisicaoVO;
     }
 
@@ -144,14 +138,10 @@ public class RequisicaoRepository {
     public Collection<DynamicVO> listarRequisicoesParceiro(Long idParceiro) throws Exception {
         try {
             JapeWrapper jw = getWrapper(DRQ_REQUISICAO);
-            return getViagensParceiro(idParceiro, jw);
+            return getRequisicoesParceiro(idParceiro, jw);
         } catch (Exception e) {
             throw new PersistenciaException(e);
         }
-    }
-
-    public Collection<DynamicVO> getViagensParceiro(Long idParceiro, JapeWrapper jw) throws Exception {
-        return jw.find("PARCEIRO = ?", BigDecimal.valueOf(idParceiro));
     }
 
     private JapeWrapper getWrapper(String nomeEntidade) {

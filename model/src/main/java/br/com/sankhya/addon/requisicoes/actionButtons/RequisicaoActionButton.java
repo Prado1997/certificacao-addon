@@ -70,6 +70,5 @@ public class RequisicaoActionButton implements AcaoRotinaJava {
         } else {
             ctx.setMensagemRetorno("Ação cancelada pelo usuário!");
         }
-
     }
 }

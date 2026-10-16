@@ -1,6 +1,5 @@
 package br.com.sankhya.addon.requisicoes.businessRules;
 
-import br.com.sankhya.addon.requisicoes.component.RequisicaoComponent;
 import br.com.sankhya.addon.requisicoes.repository.RequisicaoRepository;
 import br.com.sankhya.jape.vo.DynamicVO;
 import br.com.sankhya.modelcore.comercial.ContextoRegra;

@@ -5,12 +5,9 @@ import br.com.sankhya.addon.requisicoes.exception.PersistenciaException;
 import br.com.sankhya.addon.requisicoes.repository.RequisicaoRepository;
 import br.com.sankhya.addon.requisicoes.repository.StatusRequisicaoRepository;
 import br.com.sankhya.addon.requisicoes.util.RequisicaoConverter;
-import br.com.sankhya.addon.requisicoes.util.StatusRequisicaoEnum;
 import br.com.sankhya.extensions.actionbutton.Registro;
 import br.com.sankhya.jape.vo.DynamicVO;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
